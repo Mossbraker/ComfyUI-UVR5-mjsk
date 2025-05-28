@@ -1,3 +1,6 @@
+
+感谢原作者写的插件，fork修改了一下支持MPS
+
 # ComfyUI-UVR5
 the comfyui custom node for [UVR5](https://github.com/Anjok07/ultimatevocalremovergui) to separate vocals and background music
 <div>
