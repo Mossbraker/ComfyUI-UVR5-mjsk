@@ -1,6 +1,8 @@
 
 感谢原作者写的插件，fork修改了一下支持MPS
+
 模型手动下载的话在这里下载：https://huggingface.co/lj1995/VoiceConversionWebUI/tree/main/uvr5_weights
+
 下载后模型放到这里： ～/ComfyUI/custom_nodes/ComfyUI-UVR5/uvr5/uvr5_weights
 
 # ComfyUI-UVR5
