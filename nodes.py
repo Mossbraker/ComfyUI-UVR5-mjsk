@@ -14,7 +14,16 @@ output_path = folder_paths.get_output_directory()
 base_path = os.path.dirname(input_path)
 node_path = os.path.join(base_path,"custom_nodes/ComfyUI-UVR5")
 weights_path = os.path.join(node_path, "uvr5")
-device= "cuda" if cuda_malloc_supported() else "cpu"
+
+# 修改开始：支持mps设备
+if torch.backends.mps.is_available():
+    device = "mps"
+elif cuda_malloc_supported():
+    device = "cuda"
+else:
+    device = "cpu"
+# 修改结束：支持mps设备
+
 is_half=True
 
 
@@ -243,8 +252,12 @@ class UVR5:
         except:
             pass
         print("clean_empty_cache")
-        if torch.cuda.is_available():
+        # 修改开始：根据设备类型清空缓存
+        if device == "cuda" and torch.cuda.is_available():
             torch.cuda.empty_cache()
+        elif device == "mps" and torch.backends.mps.is_available():
+            torch.mps.empty_cache()
+        # 修改结束：根据设备类型清空缓存
         return vocal_AUDIO,bgm_AUDIO
     """
         The node will always be re executed if any of the inputs change but
@@ -254,4 +267,3 @@ class UVR5:
         This method is used in the core repo for the LoadImage node where they return the image hash as a string, if the image hash
         changes between executions the LoadImage node is executed again.
     """
-    
